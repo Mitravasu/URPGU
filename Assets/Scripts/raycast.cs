@@ -10,6 +10,8 @@ public class raycast : MonoBehaviour
     GameObject hand;
     bool isholding=false;
     Transform selectedOb;
+    Rigidbody selectedObRb;
+    float speed =10f;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,13 +31,20 @@ public class raycast : MonoBehaviour
                 if(selectionRender!=null && selection.CompareTag("selectable")){
                     selectionRender.material = yellowMaterial;
                     isholding=!isholding;
+                                        selectedObRb=hit.rigidbody;
+
+                    selectedObRb.useGravity=!selectedObRb.useGravity;
+
                     selectedOb=selection;
                 }
             }
             
         }
         if(isholding){
-            selectedOb.position=hand.transform.position;
+            float step =  speed * Time.deltaTime;
+            selectedOb.position = Vector3.MoveTowards(selectedOb.position, hand.transform.position, step);
+            
+
 
         }
     }
