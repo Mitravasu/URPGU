@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class raycast : MonoBehaviour
 {
     public Material yellowMaterial;
-    public float range=5;
+    public float range=1000;
     GameObject hand;
     bool isholding=false;
     Transform selectedOb;
@@ -14,6 +14,9 @@ public class raycast : MonoBehaviour
     float speed =10f;
     // Start is called before the first frame update
     int weapon=0;
+    public Text weaponText;
+
+    public LineRenderer line;
     void Start()
     {
         hand = GameObject.Find("hand");
@@ -25,9 +28,11 @@ public class raycast : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Alpha1)){
             weapon=1;
+            weaponText.text = "Gun";
         }
         if(Input.GetKeyDown(KeyCode.Alpha0)){
             weapon=0;
+            weaponText.text = "Select";
         }
         if(Input.GetMouseButtonDown(0)){
             
@@ -45,6 +50,8 @@ public class raycast : MonoBehaviour
                     }
                     else if(weapon==1  && selection.CompareTag("Enemy")){
                         hit.collider.gameObject.SendMessage("ApplyDamage",10.0f);
+                        line.SetPositions(new Vector3[]{transform.position,selection.position});
+
                     }
                 }
             }

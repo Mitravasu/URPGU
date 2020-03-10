@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
     Vector3 follow_direction;
     Rigidbody rb;
     Collision collision;
-    float move_speed = 100;
+    float move_speed = 1;
     float health=100;
     Vector3 offset;
 
