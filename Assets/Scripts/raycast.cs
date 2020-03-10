@@ -21,13 +21,14 @@ public class raycast : MonoBehaviour
     void Update()
     {
         if(Input.GetMouseButtonDown(0)){
+            
             RaycastHit hit;
             if(Physics.Raycast(transform.position,transform.TransformDirection(Vector3.forward), out hit,range)){
                 var selection = hit.transform;
                 var selectionRender = selection.GetComponent<Renderer>();
-                if(selectionRender!=null){
+                if(selectionRender!=null && selection.CompareTag("selectable")){
                     selectionRender.material = yellowMaterial;
-                    isholding=true;
+                    isholding=!isholding;
                     selectedOb=selection;
                 }
             }

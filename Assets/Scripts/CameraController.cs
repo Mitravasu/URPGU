@@ -8,7 +8,7 @@ public class CameraController : MonoBehaviour
     float verticalInput;
     float speed = 10;
     private float yaw = 0;
-    private float pitch = 0;
+    private float pitch = -90;
     
     // Start is called before the first frame update
     void Start()
