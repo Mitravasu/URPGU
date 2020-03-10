@@ -8,6 +8,7 @@ public class Dart : MonoBehaviour
     Vector3 follow_direction;
     public Material bulletMat;
     int velocity = 500;
+    int bulletLimit = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,13 +18,14 @@ public class Dart : MonoBehaviour
 
     // Update is called once per frame
     private void OnCollisionStay(Collision other) {
-        if(other.gameObject.tag == "Player") {
+        if(other.gameObject.tag == "Player" && bulletLimit < 100) {
             GameObject bullet = GameObject.CreatePrimitive(PrimitiveType.Capsule);
             bullet.tag = "Bullet";
             bullet.GetComponent<MeshRenderer>().material = bulletMat;
             bullet.transform.position = new Vector3(player.transform.position.x, 30, player.transform.position.z);
             bullet.AddComponent<Rigidbody>();
             bullet.GetComponent<Rigidbody>().AddForce(follow_direction);
+            bulletLimit++;
         }
     }
 

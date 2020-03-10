@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
             inAir = false;
         } else if(other.gameObject.tag == "Bullet") {
             Destroy(this.gameObject);
+            Destroy(other.gameObject);
         }
     }
 
