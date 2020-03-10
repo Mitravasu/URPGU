@@ -9,7 +9,10 @@ public class Enemy : MonoBehaviour
     Rigidbody rb;
     Collision collision;
     float move_speed = 100;
+    float health=100;
     Vector3 offset;
+
+    public TextMesh healthText;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +24,9 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(health<=0){
+            Destroy(this.gameObject);
+        }
         followPlayer();
         offset = new Vector3(Random.Range(-4,4),Random.Range(0,1), Random.Range(-4,4));
     }
@@ -31,6 +37,13 @@ public class Enemy : MonoBehaviour
         rb.AddForce(follow_direction);
     }
 
+    void ApplyDamage(float damage){
+        
+        health-=damage;
+        healthText.text=health.ToString();
+
+    }
+
     void OnCollisionEnter(Collision collision) 
     {
         GameObject[] enemies;
@@ -38,7 +51,7 @@ public class Enemy : MonoBehaviour
 
         
 
-        if(collision.gameObject.tag == "Player" && enemies.Length < 100)
+        if(collision.gameObject.tag == "Player" && enemies.Length < 5)
         {
             Instantiate(this, transform.position + offset, Quaternion.identity);
         }
