@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - selectable
+  - PClones
+  - Surface
+  - PowerUp
+  - Bullet
   layers:
   - Default
   - TransparentFX

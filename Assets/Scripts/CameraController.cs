@@ -9,10 +9,13 @@ public class CameraController : MonoBehaviour
     float speed = 10;
     private float yaw = 0;
     private float pitch = -90;
+    GameObject player;
+
     
     // Start is called before the first frame update
     void Start()
     {
+        player= GameObject.Find("Player");
         
     }
 
@@ -21,7 +24,8 @@ public class CameraController : MonoBehaviour
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
-        handleCameraMovement();
+        Camera.main.transform.rotation = player.transform.rotation;
+       // handleCameraMovement();
         handleCameraLook();
     }
 
