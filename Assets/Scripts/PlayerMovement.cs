@@ -35,6 +35,8 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(move), 0.15F);
         }
 
+        
+
         if(Input.GetKeyDown(KeyCode.RightShift) && !inAir){
             rb.AddForce(new Vector3(0,jump,0));
             inAir = true;

@@ -6,6 +6,7 @@ public class DuplicatePad : MonoBehaviour
 {
     // Start is called before the first frame update
     public int duplicateCount = 0;
+    public Material clonesMat;
     void Start()
     {
         
@@ -13,7 +14,9 @@ public class DuplicatePad : MonoBehaviour
 
     private void OnCollisionEnter(Collision other) {
         if(other.gameObject.tag == "Player" && duplicateCount < 10) {
-            Instantiate(other.gameObject, other.transform.position, other.transform.rotation);
+            GameObject PClone = Instantiate(other.gameObject, other.transform.position, other.transform.rotation);
+            PClone.GetComponent<MeshRenderer>().material = clonesMat;
+            PClone.AddComponent<PCloneScript>();
             duplicateCount++;
         }
     }
