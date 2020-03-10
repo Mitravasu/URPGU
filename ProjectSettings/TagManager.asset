@@ -8,6 +8,7 @@ TagManager:
   - PClones
   - Surface
   - PowerUp
+  - Bullet
   layers:
   - Default
   - TransparentFX

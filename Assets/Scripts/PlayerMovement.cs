@@ -6,19 +6,21 @@ public class PlayerMovement : MonoBehaviour
 {
     // Start is called before the first frame update
     public int velocity = 5;
-    public int jump = 500;
+    public int jump = 1;
     public Rigidbody rb;
     public bool inAir = false;
 
 
     void Start()
     {
-
+        rb = gameObject.GetComponent<Rigidbody>();
     }
 
     void OnCollisionEnter(Collision other) {
-        if(other.gameObject.tag == "Surface") {
+        if(other.gameObject.tag == "Surface" || other.gameObject.tag == "PClones") {
             inAir = false;
+        } else if(other.gameObject.tag == "Bullet") {
+            Destroy(this.gameObject);
         }
     }
 
@@ -31,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = new Vector3(moveHorizontal, 0, moveVertical);
 
         transform.Translate(move * velocity * Time.deltaTime, Space.World);
-        if(move!=Vector3.zero){
+        if(move!=Vector3.zero && this.gameObject.tag == "Player"){
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(move), 0.15F);
         }
 

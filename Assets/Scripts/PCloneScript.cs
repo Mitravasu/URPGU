@@ -12,6 +12,14 @@ public class PCloneScript : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        rb = gameObject.GetComponent<Rigidbody>();
+    }
+
+    void onCollisionEnter(Collision collision) {
+        if(collision.gameObject.tag == "Player") {
+            gameObject.GetComponent<Rigidbody>().isKinematic = true;
+
+        }
     }
 
     void followPlayer()
@@ -23,6 +31,9 @@ public class PCloneScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        followPlayer();
+        if(!gameObject.GetComponent<Rigidbody>().isKinematic) {
+            followPlayer();
+        }
+
     }
 }
