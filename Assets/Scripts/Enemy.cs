@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         followPlayer();
-        offset = new Vector3(Random.Range(0,4),Random.Range(0,1), Random.Range(0,4));
+        offset = new Vector3(Random.Range(-4,4),Random.Range(0,1), Random.Range(-4,4));
     }
 
     void followPlayer()
@@ -41,7 +41,6 @@ public class Enemy : MonoBehaviour
         if(collision.gameObject.tag == "Player" && enemies.Length < 100)
         {
             Instantiate(this, transform.position + offset, Quaternion.identity);
-            this.rb.constraints = RigidbodyConstraints.FreezePosition;
         }
     }
 
