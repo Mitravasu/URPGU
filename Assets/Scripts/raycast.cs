@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class raycast : MonoBehaviour
 {
-    [SerializeField] private Material yellowMaterial;
+    public Material yellowMaterial;
     // Start is called before the first frame update
     void Start()
     {
