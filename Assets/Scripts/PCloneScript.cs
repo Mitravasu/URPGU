@@ -7,11 +7,11 @@ public class PCloneScript : MonoBehaviour
     public int velocity = 10;
     Vector3 follow_direction;
     public Rigidbody rb;
-    GameObject player;
+    public GameObject attachTo;
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        attachTo = GameObject.FindGameObjectWithTag("Player");
         rb = gameObject.GetComponent<Rigidbody>();
     }
 
@@ -24,7 +24,7 @@ public class PCloneScript : MonoBehaviour
 
     void followPlayer()
     {
-        follow_direction = Vector3.Normalize(player.transform.position - transform.position) * velocity;
+        follow_direction = Vector3.Normalize(attachTo.transform.position - transform.position) * velocity;
         rb.AddForce(follow_direction);
     }
 
