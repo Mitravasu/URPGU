@@ -9,7 +9,8 @@ public class PlayerMovement : MonoBehaviour
     public int jump = 1;
     public Rigidbody rb;
     public bool inAir = false;
-
+    GameObject[] clones;
+    public Material clonesMat;
 
     void Start()
     {
@@ -38,7 +39,12 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(move), 0.15F);
         }
 
-        
+        if(Input.GetKeyDown(KeyCode.T)) {
+            clones = GameObject.FindGameObjectsWithTag("PClones");
+            foreach(GameObject clone in clones) {
+                clone.GetComponent<PCloneScript>().attachTo = GameObject.FindGameObjectWithTag("Shield");
+            }
+        }        
 
         if(Input.GetKeyDown(KeyCode.RightShift) && !inAir){
             rb.AddForce(new Vector3(0,jump,0));

@@ -12,6 +12,7 @@ TagManager:
   - Troop
   - Enemy
   - Swarm
+  - Shield
   - stuck
   layers:
   - Default
