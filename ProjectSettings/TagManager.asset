@@ -12,6 +12,7 @@ TagManager:
   - Troop
   - Enemy
   - Swarm
+  - stuck
   layers:
   - Default
   - TransparentFX

@@ -12,6 +12,7 @@ public class swarm : MonoBehaviour
     Vector3 offset;
     bool isAlive = true;
     SwarmMovement swarm_mvmt_script;
+    bool switchy =true;
 
     
     // Start is called before the first frame update
@@ -24,22 +25,23 @@ public class swarm : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        offset = new Vector3(Random.Range(-1,1),Random.Range(-1,1), Random.Range(-1,1));
+        offset = new Vector3(Random.Range(-2,2),Random.Range(-2,2), Random.Range(-2,2));
         
         if(Input.GetKeyDown(KeyCode.F))
         {
             isAlive = false;
             Destroy(swarm_mvmt_script);
         }
-        if(isAlive)
-        {
+        if(switchy){
             CreateBodyPart();
         }
+        Invoke("stuck",5f);
+        
     }
 
     void CreateBodyPart()
     {
-        follow_direction = Vector3.Normalize(body_part.transform.position - transform.position) * move_speed;
+        follow_direction = Vector3.Normalize(body_part.transform.position+offset - transform.position) * move_speed;
         rb.AddForce(follow_direction);
     }
 
@@ -50,10 +52,19 @@ public class swarm : MonoBehaviour
 
         
 
-        if(collision.gameObject == body_part && swarm.Length < 400)
+        if(collision.gameObject == body_part && swarm.Length < 300)
         {
-            Instantiate(this, transform.position + offset, Quaternion.identity);
+            Instantiate(this, transform.position+offset, Quaternion.identity);
         }
+    }
+    
+    void stuck(){
+        switchy=!switchy;
+        if(isAlive && body_part.GetComponent<Collider>().isTrigger==false){
+            CreateBodyPart();
+
+        }
+
     }
 
 

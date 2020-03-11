@@ -27,6 +27,7 @@ public class SwarmCap : MonoBehaviour
         if(other.gameObject.tag == "Swarm" && swarm_script.body_part.name == name)
         {
             counter++;
+            other.gameObject.GetComponent<Rigidbody>().constraints=RigidbodyConstraints.FreezeAll;
         }
         if(counter > 30)
         {
