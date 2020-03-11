@@ -9,6 +9,9 @@ TagManager:
   - Surface
   - PowerUp
   - Bullet
+  - Troop
+  - Enemy
+  - Swarm
   - Shield
   layers:
   - Default
