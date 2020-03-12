@@ -8,9 +8,13 @@ public class fps : MonoBehaviour
 
     Rigidbody rb;
     Transform t;
-    float speed=20f;
+    float speed=6f;
     public Vector3 move;
     public GameObject hand;
+
+    float cameraSpeed = 10;
+    private float yaw = 0;
+    private float pitch = -90;
     void Start()
     {
         rb=GameObject.Find("Player").GetComponent<Rigidbody>();
@@ -26,13 +30,19 @@ public class fps : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
         move = hand.transform.right*x + hand.transform.forward * z;
-        rb.AddForce(move*speed);
+        rb.velocity=move*speed;
         transform.rotation=hand.transform.rotation;
         rb.constraints =RigidbodyConstraints.FreezeRotation;
         transform.eulerAngles= new Vector3(0,transform.eulerAngles.y,0);
-        
-        
+        handleCameraLook();
+                
+    }
 
-        
+    void handleCameraLook()
+    {
+        Cursor.visible = false;
+        yaw += cameraSpeed * Input.GetAxis("Mouse X");
+        pitch -= cameraSpeed * Input.GetAxis("Mouse Y");
+        Camera.main.transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
     }
 }
