@@ -15,6 +15,7 @@ public class fps : MonoBehaviour
     float cameraSpeed = 10;
     private float yaw = 0;
     private float pitch = -90;
+    public bool inAir=false;
     void Start()
     {
         rb=GameObject.Find("Player").GetComponent<Rigidbody>();
@@ -30,7 +31,17 @@ public class fps : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
         move = hand.transform.right*x + hand.transform.forward * z;
-        rb.velocity=move*speed;
+        if(!inAir){
+            rb.velocity=move*speed;
+        }
+        
+        if(rb.velocity.y!=0 && !inAir){
+            rb.velocity=new Vector3(rb.velocity.x,0,rb.velocity.z);
+        }
+        if(Input.GetKeyDown(KeyCode.RightShift) && !inAir){
+            rb.AddForce(new Vector3(0,300,0));
+            inAir=!inAir;
+        }
         transform.rotation=hand.transform.rotation;
         rb.constraints =RigidbodyConstraints.FreezeRotation;
         transform.eulerAngles= new Vector3(0,transform.eulerAngles.y,0);
@@ -44,5 +55,10 @@ public class fps : MonoBehaviour
         yaw += cameraSpeed * Input.GetAxis("Mouse X");
         pitch -= cameraSpeed * Input.GetAxis("Mouse Y");
         Camera.main.transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
+    }
+    private void OnCollisionEnter(Collision other) {
+        if(other.gameObject.tag=="ground" && inAir){
+            inAir=!inAir;
+        }
     }
 }
