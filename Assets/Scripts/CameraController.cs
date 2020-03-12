@@ -16,7 +16,7 @@ public class CameraController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void LateUpdate()
+    void FixedUpdate()
     {
         handleCameraLook();
     }
@@ -29,5 +29,7 @@ public class CameraController : MonoBehaviour
         transform.LookAt(Target);
         Target.rotation = Quaternion.Euler(mouseY, mouseX * sensitivity, 0);
         player.rotation = Quaternion.Euler(0, mouseX * sensitivity, 0);
+        
+        
     }
 }
