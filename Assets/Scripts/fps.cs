@@ -57,7 +57,7 @@ public class fps : MonoBehaviour
         Camera.main.transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
     }
     private void OnCollisionEnter(Collision other) {
-        if(other.gameObject.tag=="ground" && inAir){
+        if(inAir){
             inAir=!inAir;
         }
     }
