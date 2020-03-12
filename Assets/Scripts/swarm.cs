@@ -52,7 +52,7 @@ public class swarm : MonoBehaviour
 
         
 
-        if(collision.gameObject == body_part && swarm.Length < 300)
+        if(collision.gameObject == body_part && swarm.Length < 400)
         {
             Instantiate(this, transform.position+offset, Quaternion.identity);
         }
