@@ -16,7 +16,7 @@ public class DuplicatePad : MonoBehaviour
     
 
     private void OnCollisionStay(Collision other) {
-        if(other.gameObject.tag == "Player" && duplicateCount < 100) {
+        if(other.gameObject.tag == "Player" && duplicateCount < 50) {
             GameObject PClone = Instantiate(other.gameObject, other.transform.position + new Vector3(0,50,0), other.transform.rotation);
             PClone.tag = "PClones";
             PClone.GetComponent<MeshRenderer>().material = clonesMat;
