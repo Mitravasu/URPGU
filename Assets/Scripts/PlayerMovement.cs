@@ -6,11 +6,12 @@ public class PlayerMovement : MonoBehaviour
 {
     // Start is called before the first frame update
     public int velocity = 5;
-    public int jump = 1;
+    private int jump = 1;
     public Rigidbody rb;
     public bool inAir = false;
     GameObject[] clones;
     public Material clonesMat;
+    bool shield = false;
 
     void Start()
     {
@@ -40,9 +41,18 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if(Input.GetKeyDown(KeyCode.T)) {
+            shield = !shield;
             clones = GameObject.FindGameObjectsWithTag("PClones");
+            
+            
             foreach(GameObject clone in clones) {
-                clone.GetComponent<PCloneScript>().attachTo = GameObject.FindGameObjectWithTag("Shield");
+                clone.GetComponent<Rigidbody>().AddForce(new Vector3(transform.position.x, transform.position.y - 3, transform.position.z));
+                if(shield) {
+                    clone.GetComponent<PCloneScript>().player = GameObject.FindGameObjectWithTag("Shield");
+                } else {
+                    clone.GetComponent<PCloneScript>().player = GameObject.FindGameObjectWithTag("Player");
+                }
+                
             }
         }        
 

@@ -4,35 +4,45 @@ using UnityEngine;
 
 public class PCloneScript : MonoBehaviour
 {
-    public int velocity = 10;
+    public int velocity = 50;
     Vector3 follow_direction;
     public Rigidbody rb;
-    public GameObject attachTo;
+    public GameObject player;
+
+    bool isShield = false;
     // Start is called before the first frame update
     void Start()
     {
-        attachTo = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
         rb = gameObject.GetComponent<Rigidbody>();
+        rb.useGravity = false;
     }
 
     void onCollisionEnter(Collision collision) {
         if(collision.gameObject.tag == "Player") {
-            gameObject.GetComponent<Rigidbody>().isKinematic = true;
-
+            // gameObject.GetComponent<Rigidbody>().isKinematic = true;
+            gameObject.GetComponent<Rigidbody>().constraints=RigidbodyConstraints.FreezeAll;
+        } else if(collision.gameObject.tag == "Shield") {
+            var joint = gameObject.AddComponent<FixedJoint>();
+            joint.connectedBody = collision.rigidbody;
+            isShield = true;
         }
     }
 
     void followPlayer()
     {
-        follow_direction = Vector3.Normalize(attachTo.transform.position - transform.position) * velocity;
+        follow_direction = Vector3.Normalize(player.transform.position - transform.position) * velocity;
+        
         rb.AddForce(follow_direction);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!gameObject.GetComponent<Rigidbody>().isKinematic) {
+        if(!isShield) {
             followPlayer();
+        } else {
+            transform.position = new Vector3(player.transform.position.x, player.transform.position.y - 5, player.transform.position.z);
         }
 
     }
