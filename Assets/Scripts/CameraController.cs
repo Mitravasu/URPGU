@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {   
     public Transform player, Target;
+    float sensitivity = 3;
     float mouseX;
     float mouseY;
     
@@ -22,11 +23,11 @@ public class CameraController : MonoBehaviour
 
     void handleCameraLook()
     {
-        mouseX += Input.GetAxis("Mouse X") * 2;
-        mouseY -= Input.GetAxis("Mouse Y");
-        mouseY = Mathf.Clamp(mouseY, -35, 60);
+        mouseX += Input.GetAxisRaw("Mouse X");
+        mouseY -= Input.GetAxisRaw("Mouse Y");
+        mouseY = Mathf.Clamp(mouseY, -15, 60);
         transform.LookAt(Target);
-        Target.rotation = Quaternion.Euler(mouseY, mouseX, 0);
-        player.rotation = Quaternion.Euler(0, mouseX, 0);
+        Target.rotation = Quaternion.Euler(mouseY, mouseX * sensitivity, 0);
+        player.rotation = Quaternion.Euler(0, mouseX * sensitivity, 0);
     }
 }
