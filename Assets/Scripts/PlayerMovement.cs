@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     // Start is called before the first frame update
     public int velocity = 5;
-    public int jump = 1;
+    public int jump = 100;
     public Rigidbody rb;
     public bool inAir = false;
     GameObject[] clones;
@@ -41,10 +41,23 @@ public class PlayerMovement : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.T)) {
             clones = GameObject.FindGameObjectsWithTag("PClones");
+            
             foreach(GameObject clone in clones) {
-                clone.GetComponent<PCloneScript>().attachTo = GameObject.FindGameObjectWithTag("Shield");
+                // clone.GetComponent<Rigidbody>().AddForce(new Vector3(transform.position.x, transform.position.y - 3, transform.position.z));
+                clone.GetComponent<PCloneScript>().player = GameObject.FindGameObjectWithTag("Shield"); 
+                clone.GetComponent<PCloneScript>().isDormant = !clone.GetComponent<PCloneScript>().isDormant;  
             }
-        }        
+        }      
+
+        if(Input.GetKeyDown(KeyCode.R)) {
+            clones = GameObject.FindGameObjectsWithTag("PClones");
+            
+            foreach(GameObject clone in clones) {
+                // clone.GetComponent<Rigidbody>().AddForce(new Vector3(transform.position.x, transform.position.y - 3, transform.position.z));
+                clone.GetComponent<PCloneScript>().player = GameObject.FindGameObjectWithTag("Player"); 
+                clone.GetComponent<PCloneScript>().isDormant = !clone.GetComponent<PCloneScript>().isDormant;         
+            }
+        }    
 
         if(Input.GetKeyDown(KeyCode.RightShift) && !inAir){
             rb.AddForce(new Vector3(0,jump,0));
