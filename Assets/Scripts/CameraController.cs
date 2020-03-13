@@ -4,32 +4,47 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {   
-    public Transform player, Target;
-    float sensitivity = 3;
-    float mouseX;
-    float mouseY;
+    public GameObject player;
+    float camera_move_speed = 120.0f;
+    float clamp_angle = 80.0f;
+    float input_sensitivity = 150.0f;
+    float rotation_x = 0.0f;
+    float rotation_y = 0.0f;  
+    float mouse_x;
+    float mouse_y;
     
-    // Start is called before the first frame update
+
     void Start()
     {
-
+        Vector3 rot = transform.localRotation.eulerAngles;
+        rotation_x = rot.x;
+        rotation_y = rot.y;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+
+    void Update()
     {
-        handleCameraLook();
+        mouse_x = Input.GetAxis("Mouse X");
+        mouse_y = Input.GetAxis("Mouse Y");
+        rotation_x += mouse_x * input_sensitivity * Time.deltaTime;
+        rotation_y -= mouse_y * input_sensitivity * Time.deltaTime;
+        rotation_y = Mathf.Clamp(rotation_y, -clamp_angle, clamp_angle);
+        Quaternion localRotation = Quaternion.Euler(rotation_y, rotation_x, 0); 
+        transform.rotation = localRotation;
     }
 
-    void handleCameraLook()
+    void LateUpdate() 
     {
-        mouseX += Input.GetAxisRaw("Mouse X");
-        mouseY -= Input.GetAxisRaw("Mouse Y");
-        mouseY = Mathf.Clamp(mouseY, -15, 60);
-        transform.LookAt(Target);
-        Target.rotation = Quaternion.Euler(mouseY, mouseX * sensitivity, 0);
-        player.rotation = Quaternion.Euler(0, mouseX * sensitivity, 0);
-        
-        
+        CameraUpdater();    
     }
+
+    void CameraUpdater()
+    {
+        Transform target = player.transform;
+        float step = camera_move_speed * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, target.position, step);
+    }
+
 }
